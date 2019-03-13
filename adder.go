@@ -1,5 +1,5 @@
 // Package adder adds copyright (or any other text) to all files of certain kind in directory
-package adder
+package main
 
 import (
 	"bufio"
@@ -83,9 +83,9 @@ func AddHeader(fromDir string, text []byte, ext string, recursive bool) error {
 		}
 		fb, _ := ioutil.ReadAll(bufio.NewReader(f))
 
-		text = append(text, append([]byte("\n\n"), fb...)...)
+		fileText := append(text, append([]byte("\n\n"), fb...)...)
 
-		_, err = f.WriteAt(text, 0)
+		_, err = f.WriteAt(fileText, 0)
 		f.Close()
 		if err != nil {
 			return err

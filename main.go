@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	adder "github.com/ilyakaznacheev/header-adder"
 	"github.com/jessevdk/go-flags"
 )
 
@@ -28,10 +27,10 @@ func main() {
 
 	if opts.FileName != nil {
 		// read from file
-		err = adder.AddHeaderFromFile("./", *opts.FileName, opts.Extension, opts.Recursive)
+		err = AddHeaderFromFile("./", *opts.FileName, opts.Extension, opts.Recursive)
 	} else {
 		// read from unix pipe
-		err = adder.AddHeaderFromPipe("./", os.Stdin, opts.Extension, opts.Recursive)
+		err = AddHeaderFromPipe("./", os.Stdin, opts.Extension, opts.Recursive)
 	}
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
