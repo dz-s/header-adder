@@ -7,6 +7,16 @@ import (
 	"github.com/jessevdk/go-flags"
 )
 
+const (
+	description = `                                             
++_____           _            _____   _   _         
+|  |  |___ ___ _| |___ ___   |  _  |_| |_| |___ ___ 
+|     | -_| .'| . | -_|  _|  |     | . | . | -_|  _|
+|__|__|___|__\|___|___|_|    |__|__|___|___|___|_|                                               
+
+by Ilya Kaznacheev (c) 2019 via MIT license.`
+)
+
 // Options are available command-line arguments
 type Options struct {
 	Recursive bool    `short:"r" description:"Recursive directory traversal"`
@@ -20,7 +30,10 @@ func main() {
 		opts Options
 		err  error
 	)
-	_, err = flags.Parse(&opts)
+	p := flags.NewParser(&opts, flags.Default)
+	// p.Usage = usage
+	p.LongDescription = description
+	_, err = p.Parse()
 	if err != nil {
 		return
 	}
