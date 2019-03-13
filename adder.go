@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 )
@@ -44,14 +45,14 @@ func AddHeaderFromPipe(fromDir string, r io.Reader, ext string, recursive bool) 
 // AddHeader adds header text to project files
 func AddHeader(fromDir string, text []byte, ext string, recursive bool) error {
 
-	filesToHandle := make([]os.FileInfo, 0)
+	filesToHandle := make([]string, 0)
 	if recursive {
-		err := filepath.Walk(fromDir, func(path string, info os.FileInfo, err error) error {
+		err := filepath.Walk(fromDir, func(filepath string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
 			if !info.IsDir() && strings.HasSuffix(info.Name(), ext) {
-				filesToHandle = append(filesToHandle, info)
+				filesToHandle = append(filesToHandle, path.Join(fromDir, filepath))
 			}
 			return nil
 		})
@@ -65,7 +66,7 @@ func AddHeader(fromDir string, text []byte, ext string, recursive bool) error {
 		}
 		for _, info := range files {
 			if !info.IsDir() && strings.HasSuffix(info.Name(), ext) {
-				filesToHandle = append(filesToHandle, info)
+				filesToHandle = append(filesToHandle, path.Join(fromDir, info.Name()))
 			}
 		}
 	}
@@ -74,8 +75,9 @@ func AddHeader(fromDir string, text []byte, ext string, recursive bool) error {
 		return fmt.Errorf("no files to change")
 	}
 
-	for _, f := range filesToHandle {
-		f, err := os.OpenFile(f.Name(), os.O_RDWR, 0600)
+	for _, path := range filesToHandle {
+		fmt.Println(path)
+		f, err := os.OpenFile(path, os.O_RDWR, 0600)
 		if err != nil {
 			return err
 		}
