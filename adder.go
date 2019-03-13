@@ -4,14 +4,36 @@ package adder
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
+// AddHeaderFromFile adds header text from a text file
+//
+// fromDir: root directory for action
+// pathToFile: path to header text file
+// ext: file extension
+// recursive: flag that enables recursive directory traversal
 func AddHeaderFromFile(fromDir, pathToFile string, ext string, recursive bool) error {
 	text, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		return err
+	}
+
+	return AddHeader(fromDir, text, ext, recursive)
+}
+
+// AddHeaderFromPipe adds header text from a text file
+//
+// fromDir: root directory for action
+// r: text reader interface
+// ext: file extension
+// recursive: flag that enables recursive directory traversal
+func AddHeaderFromPipe(fromDir string, r io.Reader, ext string, recursive bool) error {
+	text, err := ioutil.ReadAll(r)
 	if err != nil {
 		return err
 	}

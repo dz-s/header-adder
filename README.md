@@ -4,7 +4,7 @@ The tool help to automate header adding into project source files
 
 ## Roadmap
 
-- [ ] Read from pipe
+- [x] Read from pipe
 - [x] Read from file
 - [ ] Header update
 - [x] Recursive directory traversal
