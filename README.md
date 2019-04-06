@@ -10,6 +10,7 @@ The tool help to automate header adding into project source files
 - [x] Recursive directory traversal
 - [ ] Binaries
 - [ ] Installation
+- [ ] Templates
 
 ## Usage
 
@@ -27,7 +28,7 @@ header-adder -f <file with header> -e <extension>
 
 where `<file with header>` is a header text in a file with a proper formatting (e.g. exactly as you want the text to be in a file, with comment sighs, newlines, etx.).
 
-Example:
+### Example
 
 ```bash
 header-adder -f header.txt -e go
